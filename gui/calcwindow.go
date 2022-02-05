@@ -68,7 +68,7 @@ func (this *CalcWindow) HandleKey(s string) bool {
 			return true
 		}
 		if chr == '.' {
-			if strings.Index(this.input, s) < 0 {
+			if !strings.Contains(this.input, s) {
 				this.input = this.input + s
 				return true
 			}
