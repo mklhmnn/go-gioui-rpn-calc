@@ -41,7 +41,7 @@ func loop(w *app.Window) {
 			fmt.Print(e.State)
 			fmt.Print(": ")
 			printHex(e.Name)
-			if e.State == key.Press && cw.HandleKey(e.Name) {
+			if e.State == key.Press && cw.HandleKey(e.Name, e.Modifiers) {
 				w.Invalidate()
 			}
 

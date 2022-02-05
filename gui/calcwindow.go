@@ -60,36 +60,37 @@ func createInput() []string {
 	return make([]string, 0, 10)
 }
 
-func (this *CalcWindow) HandleKey(s string) bool {
+func (this *CalcWindow) HandleKey(s string, m key.Modifiers) bool {
 	if len(s) == 1 {
 		chr := s[0]
-		if '0' <= chr && chr <= '9' {
+		if '0' <= chr && chr <= '9' && m == 0 {
 			this.input = this.input + s
 			return true
 		}
-		if chr == '.' {
+		if chr == '.' && m == 0 {
 			if !strings.Contains(this.input, s) {
 				this.input = this.input + s
 				return true
 			}
 			return false
 		}
-		if chr == 'M' || chr == 'N' {
+		if (chr == 'M' || chr == 'N') && m == 0 {
 			return redrawOrBeep(this.negate())
 		}
-		if chr == '+' {
+		if chr == '+' && m == 0 {
 			this.finish()
 			return redrawOrBeep(this.calculator.Add())
 		}
-		if chr == '-' {
+		if chr == '-' && m == 0 {
 			this.finish()
 			return redrawOrBeep(this.calculator.Substract())
 		}
-		if chr == '*' {
+		// ugly hack because * is not sent
+		if chr == '8' && m == key.ModShift {
 			this.finish()
 			return redrawOrBeep(this.calculator.Multiply())
 		}
-		if chr == '/' {
+		if chr == '/' && m == 0 {
 			this.finish()
 			return redrawOrBeep(this.calculator.Divide())
 		}
