@@ -36,7 +36,7 @@ func NewCalcWindow() *CalcWindow {
 func (this *CalcWindow) Render(gtx layout.Context) {
 	lines := createInput()
 	this.calculator.Foreach(func(v float64) {
-		lines = append(lines, strconv.FormatFloat(v, 'g', 5, 64))
+		lines = append(lines, strconv.FormatFloat(v, 'g', 9, 64))
 	})
 	if len(this.input) > 0 {
 		lines = append(lines, this.input+"|")
