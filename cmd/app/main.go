@@ -41,9 +41,16 @@ func loop(w *app.Window) {
 			fmt.Print(e.State)
 			fmt.Print(": ")
 			printHex(e.Name)
-			if e.State == key.Press && cw.HandleKey(e.Name, e.Modifiers) {
+			if e.State == key.Press && e.Modifiers == 0 && cw.HandleKey(e.Name) {
 				w.Invalidate()
 			}
+
+		case key.EditEvent:
+			printHex(e.Text)
+			if cw.HandleText(e.Text) {
+				w.Invalidate()
+			}
+		
 
 		case system.FrameEvent:
 			gtx := layout.NewContext(&ops, e)

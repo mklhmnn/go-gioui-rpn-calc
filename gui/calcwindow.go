@@ -60,42 +60,10 @@ func createInput() []string {
 	return make([]string, 0, 10)
 }
 
-func (this *CalcWindow) HandleKey(s string, m key.Modifiers) bool {
-	if len(s) == 1 {
-		chr := s[0]
-		if '0' <= chr && chr <= '9' && m == 0 {
-			this.input = this.input + s
-			return true
-		}
-		if chr == '.' && m == 0 {
-			if !strings.Contains(this.input, s) {
-				this.input = this.input + s
-				return true
-			}
-			return false
-		}
-		if (chr == 'M' || chr == 'N') && m == 0 {
-			return redrawOrBeep(this.negate())
-		}
-		if chr == '+' && m == 0 {
-			this.finish()
-			return redrawOrBeep(this.calculator.Add())
-		}
-		if chr == '-' && m == 0 {
-			this.finish()
-			return redrawOrBeep(this.calculator.Substract())
-		}
-		// ugly hack because * is not sent
-		if chr == '8' && m == key.ModShift {
-			this.finish()
-			return redrawOrBeep(this.calculator.Multiply())
-		}
-		if chr == '/' && m == 0 {
-			this.finish()
-			return redrawOrBeep(this.calculator.Divide())
-		}
-	}
+func (this *CalcWindow) HandleKey(s string) bool {
 	switch s {
+	case "M", "N":
+		return redrawOrBeep(this.negate())
 	case key.NameLeftArrow:
 		return this.swap()
 	case key.NameRightArrow:
@@ -110,6 +78,40 @@ func (this *CalcWindow) HandleKey(s string, m key.Modifiers) bool {
 		return this.delete()
 	case key.NameDeleteForward:
 		return this.delete()
+	}
+	return false
+}
+
+func (this *CalcWindow) HandleText(s string) bool {
+	if len(s) == 1 {
+		chr := s[0]
+		if '0' <= chr && chr <= '9' {
+			this.input = this.input + s
+			return true
+		}
+		if chr == '.' {
+			if !strings.Contains(this.input, s) {
+				this.input = this.input + s
+				return true
+			}
+			return false
+		}
+		if chr == '+' {
+			this.finish()
+			return redrawOrBeep(this.calculator.Add())
+		}
+		if chr == '-' {
+			this.finish()
+			return redrawOrBeep(this.calculator.Substract())
+		}
+		if chr == '*' {
+			this.finish()
+			return redrawOrBeep(this.calculator.Multiply())
+		}
+		if chr == '/' {
+			this.finish()
+			return redrawOrBeep(this.calculator.Divide())
+		}
 	}
 	return false
 }
