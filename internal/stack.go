@@ -37,8 +37,8 @@ func (this *Stack) Push(v float64) {
 
 func (this *Stack) Pop() float64 {
 	var len = this.Len()
-	var result = this.values[len - 1]
-	this.values = this.values[:len - 1]
+	var result = this.values[len-1]
+	this.values = this.values[:len-1]
 	return result
 }
 
@@ -48,7 +48,7 @@ func (this *Stack) Drop() bool {
 		return false
 	}
 
-	this.values = this.values[:len - 1]
+	this.values = this.values[:len-1]
 	return true
 }
 
