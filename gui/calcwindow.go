@@ -64,6 +64,14 @@ func (this *CalcWindow) HandleKey(s string) bool {
 	switch s {
 	case "M", "N":
 		return redrawOrBeep(this.negate())
+	case "S": {
+		this.finish()
+		return redrawOrBeep(this.calculator.Sqrt())
+	}
+	case "X": {
+		this.finish()
+		return redrawOrBeep(this.calculator.Invert())
+	}
 	case key.NameLeftArrow:
 		return this.swap()
 	case key.NameRightArrow:

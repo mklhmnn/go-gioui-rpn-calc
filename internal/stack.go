@@ -1,6 +1,9 @@
 package internal
 
-import "fmt"
+import (
+	"fmt"
+	"math"
+)
 
 type Stack struct {
 	values []float64
@@ -71,6 +74,26 @@ func (this *Stack) Duplicate() bool {
 	var value = this.Pop()
 	this.Push(value)
 	this.Push(value)
+	return true
+}
+
+func (this *Stack) Sqrt() bool {
+	if this.Len() == 0 {
+		return false
+	}
+
+	var value = this.Pop()
+	this.Push(math.Sqrt(value))
+	return true
+}
+
+func (this *Stack) Invert() bool {
+	if this.Len() == 0 {
+		return false
+	}
+
+	var value = this.Pop()
+	this.Push(1.0 / value)
 	return true
 }
 
